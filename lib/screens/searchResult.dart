@@ -71,9 +71,8 @@ class _SearchResultState extends State<SearchResultPage> {
           title: Text(widget.title),
         ),
         body: StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection('preferences')
-                .snapshots(),
+            stream:
+                FirebaseFirestore.instance.collection('transports').snapshots(),
             builder: (BuildContext context,
                 AsyncSnapshot<QuerySnapshot> _preferences) {
               if (!_preferences.hasData) {
@@ -85,72 +84,79 @@ class _SearchResultState extends State<SearchResultPage> {
               return new ListView(
                   padding: EdgeInsets.all(10),
                   children: _preferences.data.docs.map((item) {
-                    return new Center(
-                        child: Card(
-                      elevation: 10.0,
-                      child: InkWell(
-                        splashColor: Colors.blue.withAlpha(30),
-                        onTap: () {},
-                        child: Container(
-                            padding: EdgeInsets.all(20),
-                            height: MediaQuery.of(context).size.height / 6,
-                            width: MediaQuery.of(context).size.width / 1.1,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      jsonDecode(item.toString())["type"],
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 21,
-                                          color: Colors.black54),
-                                    ),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.access_time,
-                                          size: 15,
-                                        ),
-                                        Text(
-                                          jsonDecode(item.toString())["heureDep"],
-                                          style: TextStyle(fontSize: 15),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Text(
-                                      "Départ: " +
-                                          jsonDecode(item.toString())["stationDep"],
-                                      style: TextStyle(color: Colors.black54),
-                                    ),
-                                    Icon(
-                                      Icons.arrow_forward_outlined,
-                                      size: 15,
-                                      color: Colors.grey,
-                                    ),
-                                    Text(
-                                      "Arrivée: " +
-                                          jsonDecode(item.toString())["stationArrivee"],
-                                      style: TextStyle(color: Colors.black54),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            )),
-                      ),
-                    ));
+                    if (item["type"] == widget.transport &&
+                        item["stationDep"] == widget.stationDep &&
+                        item["stationArrivee"] == widget.stationArrivee &&
+                        item["heureDep"] == widget.heureDep) {
+                      return new Center(
+                          child: Card(
+                        elevation: 10.0,
+                        child: InkWell(
+                          splashColor: Colors.blue.withAlpha(30),
+                          onTap: () {},
+                          child: Container(
+                              padding: EdgeInsets.all(20),
+                              height: MediaQuery.of(context).size.height / 5,
+                              width: MediaQuery.of(context).size.width / 1.1,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        item["type"],
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 21,
+                                            color: Colors.black54),
+                                      ),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.access_time,
+                                            size: 15,
+                                          ),
+                                          Text(
+                                            item["heureDep"],
+                                            style: TextStyle(fontSize: 15),
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Départ: " + item["stationDep"],
+                                        style: TextStyle(color: Colors.black54),
+                                      ),
+                                      Icon(
+                                        Icons.arrow_downward_outlined,
+                                        size: 15,
+                                        color: Colors.grey,
+                                      ),
+                                      Text(
+                                        "Arrivée: " + item["stationArrivee"],
+                                        style: TextStyle(color: Colors.black54),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              )),
+                        ),
+                      ));
+                    } else {
+                      return Center(
+                        child: SizedBox(height: 0,),
+                      );
+
+                    }
                   }).toList());
             }));
   }

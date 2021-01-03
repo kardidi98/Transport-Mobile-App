@@ -9,7 +9,7 @@ class MyAppAfterSplash extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'E-Transport',
+        title: 'Trans-App',
         theme: ThemeData(
           primarySwatch: Colors.teal,
         ),
@@ -34,9 +34,6 @@ class _AfterSplashState extends State<AfterSplash> {
     Home(),
     UserPreferencesForm(),
     UserForm(),
-    Text(
-      'Index 2: School',
-    ),
   ];
   Widget _child = _children.elementAt(0);
 
@@ -64,7 +61,7 @@ class _AfterSplashState extends State<AfterSplash> {
     return Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          title: Text('E-Transport'),
+          title: Text('Trans-App'),
         ),
         body: _child, // new
         bottomNavigationBar: FluidNavBar(
@@ -81,10 +78,7 @@ class _AfterSplashState extends State<AfterSplash> {
                 icon: Icons.search,
                 backgroundColor: Color(0xFFEC4134),
                 extras: {"label": "search"}),
-            FluidNavBarIcon(
-                icon: Icons.info_outline,
-                backgroundColor: Color(0xFFFCBA02),
-                extras: {"label": "info"}),
+
           ],
           onChange: _handleNavigationChange,
           style: FluidNavBarStyle(iconUnselectedForegroundColor: Colors.white),

@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'file:///C:/flutter_workspace/transport_app/lib/screens/afterSplash.dart';
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(MyApp());
@@ -14,8 +14,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'E-Transport',
-      home: MyHomePage(title: 'E-Transport'),
+      title: 'Trans-App',
+      home: MyHomePage(title: 'Trans-App'),
     );
   }
 }
@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
           margin: EdgeInsets.only(top: 150.0),
           child: Center(
             child: AnimatedSplash(
-              imagePath: 'images/splash.jpg',
+              imagePath: 'images/logo.png',
               home: new MyAppAfterSplash(),
               duration: 5000,
               type: AnimatedSplashType.StaticDuration,

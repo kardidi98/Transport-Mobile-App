@@ -16,12 +16,13 @@ class UserForm extends StatefulWidget {
 class _UserFormState extends State<UserForm> {
   final GlobalKey<FormState> _formKey = new GlobalKey<FormState>();
   List<String> _transports = <String>['', 'Bus', 'Trame', 'Taxi', 'Train'];
-  String _transport = '';
+  String _transport = 'Bus';
   DateTime _heureDep = DateTime.now();
   String _stationDep = "";
   String _stationArrivee = "";
 
   final format = DateFormat("HH:mm");
+
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +68,7 @@ class _UserFormState extends State<UserForm> {
                           format: format,
                           initialValue: (DateTime.now()),
                           onChanged: (val) {
-                            setState(() => {_heureDep = val});
+                            setState(() => {_heureDep = val });
                           },
                           decoration: InputDecoration(
                               icon: const Icon(Icons.access_time),
@@ -186,7 +187,7 @@ class _UserFormState extends State<UserForm> {
                                 MaterialPageRoute(
                                     builder: (context) => SearchResult(
                                           title: "Transports Disponibles",
-                                          heureDep: _heureDep.toString(),
+                                          heureDep: DateFormat("HH:mm").format(_heureDep).toString(),
                                           stationDep: _stationDep,
                                           stationArrivee: _stationArrivee,
                                           transport: _transport,
